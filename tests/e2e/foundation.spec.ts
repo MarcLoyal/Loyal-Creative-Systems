@@ -50,6 +50,7 @@ test.describe("site shell", () => {
 
   test("services menu opens and closes with the keyboard", async ({ page, isMobile }) => {
     test.skip(isMobile, "desktop menu");
+    await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/");
     const toggle = page.locator("header nav[aria-label=Main] summary", { hasText: "Services" });
     await toggle.focus();

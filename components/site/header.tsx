@@ -8,7 +8,7 @@ import { Disclosure } from "./disclosure";
 import { MarketSwitcher } from "./market-switcher";
 
 const navItem =
-  "flex min-h-11 items-center gap-1 rounded-md px-3 font-heading text-[0.9375rem] font-semibold text-navy-900 no-underline hover:bg-surface-alt hover:text-blue-700";
+  "flex min-h-11 items-center gap-1 whitespace-nowrap rounded-md px-3 font-heading text-[0.9375rem] font-semibold text-navy-900 no-underline hover:bg-surface-alt hover:text-blue-700";
 
 function MenuList({ links }: { links: NavLink[] }) {
   return (
@@ -50,7 +50,7 @@ export function SiteHeader({ market }: { market: Market }) {
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <Logo />
 
-        <nav aria-label="Main" className="hidden lg:block">
+        <nav aria-label="Main" className="hidden xl:block">
           <ul className="flex items-center gap-0.5">
             <li>
               <DropMenu label="Services" links={SERVICES_NAV} />
@@ -68,14 +68,14 @@ export function SiteHeader({ market }: { market: Market }) {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-4 lg:flex">
+        <div className="hidden items-center gap-4 xl:flex">
           <MarketSwitcher current={market} />
           <ButtonLink href={PRIMARY_CTA.href}>{PRIMARY_CTA.label}</ButtonLink>
         </div>
 
         {/* Mobile menu */}
         <Disclosure
-          className="lg:hidden"
+          className="xl:hidden"
           summaryClassName="flex size-11 cursor-pointer list-none items-center justify-center rounded-md text-navy-900 hover:bg-surface-alt [&::-webkit-details-marker]:hidden"
           panelClassName="fixed inset-x-0 top-18 bottom-0 z-40 overflow-y-auto border-t border-line bg-white px-4 pt-4 pb-10"
           summary={

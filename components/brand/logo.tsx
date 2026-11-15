@@ -26,7 +26,7 @@ export function Logo({ variant = "color", className }: { variant?: "color" | "wh
         <span className="flex flex-col leading-none">
           <span
             className={cn(
-              "font-heading text-lg font-bold tracking-tight",
+              "font-heading text-lg font-bold tracking-tight whitespace-nowrap",
               variant === "white" ? "text-white" : "text-navy-900",
             )}
           >
@@ -34,7 +34,7 @@ export function Logo({ variant = "color", className }: { variant?: "color" | "wh
           </span>
           <span
             className={cn(
-              "mt-1 font-heading text-[0.625rem] font-semibold tracking-[0.2em] uppercase",
+              "mt-1 font-heading text-[0.625rem] font-semibold tracking-[0.14em] uppercase sm:whitespace-nowrap",
               variant === "white" ? "text-blue-300" : "text-blue-700",
             )}
             aria-hidden="true"
