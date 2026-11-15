@@ -2,20 +2,22 @@
 
 /*
  * Design tokens (SPEC section 2.2).
- * Values are the spec's approximations. TODO(brand): re-sample from logo.png once supplied.
+ * Brand colours sampled from logo.png: navy from the "L" and "C", blue-700 and blue-500 from
+ * the mid-point and bright end of the gradient across the "S".
  *
  * Contrast notes (WCAG AA, checked with scripts/contrast.mjs):
  *  - blue-500 is 3.65:1 on white: use for focus rings, icons, borders and large display text only.
- *    Links and small accent text use blue-700 (7.17:1).
+ *    Links and small accent text use blue-700 (6.83:1).
  *  - slate-500 is 4.43:1 on surface-alt: secondary *text* uses `muted` (slate-600) instead.
  *  - success / warning base colours fail as text on white: use the *-700 text variants.
  */
 @theme {
-  --color-navy-900: #0b1f5c;
-  --color-navy-950: #071640;
+  --color-navy-900: #011e56;
+  --color-navy-950: #00133a;
   --color-blue-300: #7db8ff;
-  --color-blue-500: #0a84ff;
-  --color-blue-700: #0b4fc4;
+  --color-blue-500: #0085fc;
+  --color-blue-400: #008df8;
+  --color-blue-700: #0054c5;
   --color-ink: #0f172a;
   --color-slate-300: #cbd5e1;
   --color-slate-500: #64748b;
@@ -122,7 +124,8 @@
     clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3rem), 0 100%);
   }
   .brand-gradient {
-    background-image: linear-gradient(120deg, var(--color-navy-900) 0%, var(--color-blue-700) 55%, var(--color-blue-500) 100%);
+    /* Same stops as the gradient across the "S" in the logo. */
+    background-image: linear-gradient(120deg, var(--color-navy-900) 0%, var(--color-blue-700) 55%, var(--color-blue-400) 100%);
   }
   .skip-link {
     position: absolute;

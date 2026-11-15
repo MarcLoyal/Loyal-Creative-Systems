@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { Logo } from "@/components/brand/logo";
+import { BRAND } from "@/config/site";
 import { Badge, StatusPill } from "@/components/ui/badge";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Card, CardBody, CardTitle } from "@/components/ui/card";
@@ -17,9 +19,9 @@ export const metadata: Metadata = {
 };
 
 const COLORS: { token: string; hex: string; use: string }[] = [
-  { token: "navy-900", hex: "#0B1F5C", use: "Headings, nav, footer, primary buttons" },
-  { token: "blue-500", hex: "#0A84FF", use: "Focus rings, active stages, icons. Not for small text (3.65:1)" },
-  { token: "blue-700", hex: "#0B4FC4", use: "Links, hover, gradient midpoint" },
+  { token: "navy-900", hex: "#011E56", use: "Headings, nav, footer, primary buttons" },
+  { token: "blue-500", hex: "#0085FC", use: "Focus rings, active stages, icons. Not for small text (3.65:1)" },
+  { token: "blue-700", hex: "#0054C5", use: "Links, hover, gradient midpoint" },
   { token: "ink", hex: "#0F172A", use: "Body text" },
   { token: "muted", hex: "#475569", use: "Secondary text (AA on white and surface-alt)" },
   { token: "slate-500", hex: "#64748B", use: "Placeholders, borders, non-text" },
@@ -51,6 +53,7 @@ function Section({ id, title, children, note }: { id: string; title: string; chi
 }
 
 const TOC = [
+  ["logo", "Logo"],
   ["colors", "Color"],
   ["type", "Typography"],
   ["shape", "Shape"],
@@ -96,9 +99,35 @@ export default function DesignSystemPage() {
 
       <main className="mt-10">
         <Section
+          id="logo"
+          title="Logo"
+          note="The supplied artwork, used as-is. Never redraw, recolour or re-letter it. Clear space on every side is at least the width of the “L” stem. The white version is for navy and dark backgrounds only."
+        >
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="flex items-center justify-center rounded-card border border-line p-8">
+              <Image src={BRAND.logoFull.src} alt="Full logo with tagline" width={BRAND.logoFull.width} height={BRAND.logoFull.height} className="h-auto w-full max-w-sm" />
+            </div>
+            <div className="flex items-center justify-center rounded-card bg-navy-900 p-8">
+              <Image src={BRAND.logoFull.white} alt="Full logo, white version" width={BRAND.logoFull.width} height={BRAND.logoFull.height} className="h-auto w-full max-w-sm" />
+            </div>
+            <div className="flex items-center justify-center rounded-card border border-line p-8">
+              <Image src={BRAND.logo.src} alt="Logo without tagline, used in the header" width={BRAND.logo.width} height={BRAND.logo.height} className="h-12 w-auto" />
+            </div>
+            <div className="flex items-center justify-center gap-8 rounded-card bg-surface-alt p-8">
+              <Image src={BRAND.mark.src} alt="LCS mark" width={BRAND.mark.width} height={BRAND.mark.height} className="h-10 w-auto" />
+              <Image src="/icon.png" alt="App icon" width={64} height={64} className="size-16 rounded-xl shadow-sm ring-1 ring-line" unoptimized />
+            </div>
+          </div>
+          <p className="mt-3 text-sm text-muted">
+            Files in <code>public/brand/</code>, regenerated from <code>logo.png</code> with{" "}
+            <code>python3 scripts/brand-assets.py</code>.
+          </p>
+        </Section>
+
+        <Section
           id="colors"
           title="Color"
-          note="Approximate values from SPEC 2.2, to be re-sampled from the logo file. Contrast ratios checked against WCAG AA; see notes for tokens with limits."
+          note="Navy and blues sampled from the logo file; the rest from SPEC 2.2. Contrast ratios checked against WCAG AA; see notes for tokens with limits."
         >
           <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {COLORS.map((c) => (

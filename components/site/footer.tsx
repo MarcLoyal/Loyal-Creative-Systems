@@ -11,7 +11,7 @@ export function SiteFooter({ market }: { market: Market }) {
       <div className="mx-auto max-w-7xl px-4 pt-14 pb-10 sm:px-6 lg:px-8">
         <div className="grid gap-10 lg:grid-cols-[1.3fr_2fr]">
           <div>
-            <Logo variant="white" className="-ml-1.5" />
+            <Logo variant="white" size="lg" className="-ml-3.5" />
             <p className="mt-4 max-w-xs">{SITE.tagline}</p>
             <p className="mt-4">
               <a href={`mailto:${SITE.contactEmail}`} className="text-blue-300 underline-offset-4 hover:underline">

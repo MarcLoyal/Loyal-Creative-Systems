@@ -4,45 +4,38 @@ import { BRAND, SITE } from "@/config/site";
 import { cn } from "@/lib/cn";
 
 /**
- * Logo (SPEC 2.1). Uses the supplied file as-is once it is in public/brand/.
- * Until then a plain-text wordmark stands in. It deliberately does not imitate
- * the logo artwork. Clear space around the logo is provided by the padding here.
+ * Logo (SPEC 2.1): the supplied artwork, used as-is (transparent crop, or the white
+ * version on dark backgrounds). Never redrawn or re-lettered.
+ *
+ * Clear space: the padding around the image equals the width of the "L" stem
+ * (about 21% of the lockup's height) on every side.
  */
-export function Logo({ variant = "color", className }: { variant?: "color" | "white"; className?: string }) {
+export function Logo({
+  variant = "color",
+  size = "md",
+  className,
+  priority = false,
+}: {
+  variant?: "color" | "white";
+  size?: "md" | "lg";
+  className?: string;
+  priority?: boolean;
+}) {
+  const { src, white, width, height } = BRAND.logo;
   return (
     <Link
       href="/"
-      className={cn("inline-flex items-center p-1.5 no-underline", className)}
+      className={cn("inline-flex shrink-0 items-center no-underline", size === "md" ? "p-2.5" : "p-3.5", className)}
     >
-      {BRAND.logoAvailable ? (
-        <Image
-          src={variant === "white" ? BRAND.logoWhite : BRAND.logo}
-          alt={SITE.name}
-          width={BRAND.logoWidth}
-          height={BRAND.logoHeight}
-          priority
-        />
-      ) : (
-        <span className="flex flex-col leading-none">
-          <span
-            className={cn(
-              "font-heading text-lg font-bold tracking-tight whitespace-nowrap",
-              variant === "white" ? "text-white" : "text-navy-900",
-            )}
-          >
-            Loyal Creative Systems
-          </span>
-          <span
-            className={cn(
-              "mt-1 font-heading text-[0.625rem] font-semibold tracking-[0.14em] uppercase sm:whitespace-nowrap",
-              variant === "white" ? "text-blue-300" : "text-blue-700",
-            )}
-            aria-hidden="true"
-          >
-            {SITE.tagline.replace(/\.$/, "")}
-          </span>
-        </span>
-      )}
+      <Image
+        src={variant === "white" ? white : src}
+        alt={SITE.name}
+        width={width}
+        height={height}
+        priority={priority}
+        sizes={size === "md" ? "170px" : "220px"}
+        className={cn("w-auto", size === "md" ? "h-11 sm:h-12" : "h-16")}
+      />
       <span className="sr-only">, home</span>
     </Link>
   );

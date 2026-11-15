@@ -48,7 +48,7 @@ export function SiteHeader({ market }: { market: Market }) {
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
       <div className="mx-auto flex h-18 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo />
+        <Logo priority className="-ml-2.5" />
 
         <nav aria-label="Main" className="hidden xl:block">
           <ul className="flex items-center gap-0.5">

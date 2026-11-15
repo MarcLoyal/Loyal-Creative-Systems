@@ -32,11 +32,12 @@ Phases from SPEC 26. One phase at a time; each ends with tests, a browser check,
 - [x] Security headers: CSP, HSTS, frame-ancestors none / X-Frame-Options DENY, nosniff, strict referrer policy, permissions policy. `X-Robots-Tag: noindex` on private routes.
 - [x] `.env.example` with a comment per variable and the phase that needs it.
 - [x] CI workflow: audit, typecheck, lint, unit, integration (Postgres service), build; e2e on main.
-- [x] Lighthouse (mobile, simulated 4G), home: performance 96, accessibility 100, best practices 96, SEO 100; LCP 2.1 s.
+- [x] Logo (SPEC 2.1): `logo.png` in the root; `scripts/brand-assets.py` derives transparent and white versions, a mark-only crop, favicon, app icons and the Open Graph image (`public/brand/`, `app/`). Artwork is cropped and background-removed only, never redrawn.
+- [x] Colour tokens re-sampled from the logo: navy-900 #011E56, blue-700 #0054C5, blue-500 #0085FC, gradient end #008DF8.
+- [x] Lighthouse (mobile, simulated 4G), home, median of 5 runs: performance 98 (min 91), accessibility 100, best practices 96, SEO 100; LCP 2.2 s (range 2.1–3.0 s, variance from font timing in the test sandbox).
 
 ### Blocked / waiting
 - [ ] **Preview deployment** — needs a Vercel project linked to this repo and a Supabase project (see accounts below).
-- [ ] **Logo** — `logo.png` was not supplied. A plain-text wordmark and a placeholder "LCS" favicon stand in; flip `BRAND.logoAvailable` in `config/site.ts` once the processed files are in `public/brand/`. Colour tokens still need re-sampling from the file.
 - [ ] Apply the migration to the Supabase project (`supabase db push` or SQL editor) once it exists.
 
 ### Deviations from the spec (for review)
@@ -47,7 +48,9 @@ Phases from SPEC 26. One phase at a time; each ends with tests, a browser check,
 5. **Staff access requires two-factor at the database level**: staff policies only match sessions with `aal2`. A staff member signed in without 2FA sees nothing.
 6. **Client users cannot write files or questionnaire answers directly**; those go through server routes (virus scan, validation). Clients can post portal messages directly, only on their own project and as themselves.
 7. **CSP allows `'unsafe-inline'` scripts** so marketing pages stay statically generated (a nonce forces dynamic rendering). Tighten with nonces on admin/portal in phase 10.
-8. Stat counter "method" is a disclosure ("How this is counted") instead of a hover tooltip, so it works on touch and with keyboards.
+8. **Header and footer use the logo without the tagline.** At navigation size (48 px tall) the tagline would be about 3 px high and unreadable; the footer shows the tagline as text beneath. The full logo with tagline is used for large placements and the social image.
+9. **Logo clear space = width of the "L" stem**, not the full height of the "L". The full height (about 70% of the logo's height) would need a header roughly 130 px tall. Confirm or tell me otherwise.
+10. Stat counter "method" is a disclosure ("How this is counted") instead of a hover tooltip, so it works on touch and with keyboards.
 
 ### Known, expected until phase 2
 - Header and footer link to pages that don't exist yet (404). Lighthouse best-practices shows 96 only because of 404 prefetches of `/contact` and `/demo`.
