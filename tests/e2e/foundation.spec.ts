@@ -4,31 +4,36 @@ import { expect, test } from "@playwright/test";
 /** Phase 1 checks: shell, market routing, design system, accessibility, responsive widths. */
 
 test.describe("market routing", () => {
+  const firstSegment = (page: import("@playwright/test").Page) => page.locator("#segments li h3").first();
+
   test("Philippine visitors get the PH market, with cooperatives first", async ({ browser }) => {
     const ctx = await browser.newContext({ extraHTTPHeaders: { "x-vercel-ip-country": "PH" } });
     const page = await ctx.newPage();
     await page.goto("/");
-    await expect(page.getByText("Showing the Philippines market")).toBeVisible();
-    await expect(page.locator("main li h3").first()).toHaveText("Cooperatives");
+    await expect(firstSegment(page)).toHaveText("Cooperatives");
+    await page.goto("/services/accounting");
+    await expect(page.getByText(/GCash/).first()).toBeAttached();
     await ctx.close();
   });
 
   test("everyone else gets the US market", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByText("Showing the United States market")).toBeVisible();
+    await expect(firstSegment(page)).toHaveText("Local service businesses");
+    await page.goto("/services/accounting");
+    await expect(page.getByText(/QuickBooks/).first()).toBeAttached();
   });
 
   test("the switcher overrides detection and persists for 12 months", async ({ page, context, isMobile }) => {
     await page.goto("/");
     const scope = isMobile ? page.locator("footer") : page.locator("header");
     await scope.getByRole("button", { name: "Philippines" }).first().click();
-    await expect(page.getByText("Showing the Philippines market")).toBeVisible();
+    await expect(firstSegment(page)).toHaveText("Cooperatives");
     const cookie = (await context.cookies()).find((c) => c.name === "lcs_market");
     expect(cookie?.value).toBe("ph");
     const days = ((cookie?.expires ?? 0) * 1000 - Date.now()) / 86_400_000;
     expect(days).toBeGreaterThan(360);
     await page.reload();
-    await expect(page.getByText("Showing the Philippines market")).toBeVisible();
+    await expect(firstSegment(page)).toHaveText("Cooperatives");
   });
 });
 

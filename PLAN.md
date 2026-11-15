@@ -4,8 +4,8 @@ Phases from SPEC 26. One phase at a time; each ends with tests, a browser check,
 
 | Phase | Status |
 |---|---|
-| 1. Foundation | **Built — awaiting approval** (preview deployment blocked on accounts, see below) |
-| 2. Marketing site | Not started |
+| 1. Foundation | Built (preview deployment and Supabase deferred by the owner) |
+| 2. Marketing site | **Built — awaiting review** |
 | 3. Capture and qualification | Not started |
 | 4. Proposal and booking | Not started |
 | 5. Closing and onboarding | Not started |
@@ -52,9 +52,36 @@ Phases from SPEC 26. One phase at a time; each ends with tests, a browser check,
 9. **Logo clear space = width of the "L" stem**, not the full height of the "L". The full height (about 70% of the logo's height) would need a header roughly 130 px tall. Confirm or tell me otherwise.
 10. Stat counter "method" is a disclosure ("How this is counted") instead of a hover tooltip, so it works on touch and with keyboards.
 
-### Known, expected until phase 2
-- Header and footer link to pages that don't exist yet (404). Lighthouse best-practices shows 96 only because of 404 prefetches of `/contact` and `/demo`.
-- Home page is a shell to prove layout and market routing; the real home page is phase 2.
+
+---
+
+## Phase 2 — Marketing site (SPEC 5, 6)
+
+Open decisions use the SPEC 27 defaults: D4 systems only, D7 company name only (no team section), D9 no client case studies (the site is the first case study), D2 `call_only` (no prices shown).
+
+### Done
+- [x] All public pages, in both markets: Home (8 sections), Services overview, 4 service pages, 3 segment pages, How It Works, Case Studies index + "This website" case study, Blog index (empty state), About, Contact, Demo, Privacy, Terms, Data request.
+- [x] Copy lives in `config/content/` (services, segments, pipeline, case studies, demo), with per-market variants (PH: GCash, Maya, BIR, CDA; US: QuickBooks, Xero, sales tax, ACH).
+- [x] Pipeline diagram (SPEC 6.2): 7 stages, travelling pulse, each stage a button opening a details panel; vertical on mobile. Shows target times and says real averages appear once live. Compact animated version in the home hero.
+- [x] Services diagram (SPEC 6.3): segment selector replays one record through CRM → Operations → Accounting → Bookkeeping.
+- [x] Service and segment templates per SPEC 6.4 / 6.5: automation mini-diagrams, connections, segment tabs, day before / day after, FAQs.
+- [x] Demo page: scripted playback for 3 fictional sample businesses (score breakdown, sample plan, emails, project), clearly labelled; ends with "Run this for real" → `/contact?segment=…`.
+- [x] Legal drafts covering both markets (DPA 2012, CCPA), visibly flagged for legal review.
+- [x] SEO: unique title + description per page, canonical on the market-free URL, Open Graph, structured data (Organization, Service, FAQPage, BreadcrumbList), full sitemap, robots.
+- [x] Reduced motion: every animation has a still state; diagrams' text content never depends on animation.
+- [x] Fonts subset to the characters and weights used (85 KB → 42 KB): `scripts/subset-fonts.py`.
+- [x] Tests: 108 Playwright checks — every page in both markets for status, single h1, no horizontal scroll, canonical, valid JSON-LD, axe WCAG 2.1 AA; unique titles; sitemap exactness; diagrams and demo interaction; banned-claims scan.
+- [x] Lighthouse mobile (simulated 4G): performance 94–99, accessibility 100, best practices 100, SEO 100 on every page tested.
+
+### Left for later phases (placeholders say so on the page)
+- Smart intake form on `/contact` and embedded on segment pages → phase 3. Until then `/contact` shows the email address.
+- Chat launcher → phase 3.
+- Live counters, activity feed, live stage lighting, and the real "Try it" demo on visitor input → phase 8.
+- Blog posts and client case studies from the database, with filters → phase 9.
+- Self-service data request form with email verification → later phase; `/data-request` uses email for now.
+
+### Watch
+- **LCP:** Lighthouse's simulated LCP median is 2.5–2.7 s on content pages (range 2.0–2.8 s), against a 2.5 s target. The hero text paints at 0.8 s; the estimate is pushed up by the framework's JavaScript in Lighthouse's pessimistic model. Re-measure on the real deployment (field data) in phase 10 before further work.
 
 ---
 

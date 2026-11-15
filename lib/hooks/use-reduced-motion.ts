@@ -1,0 +1,23 @@
+"use client";
+
+import { useSyncExternalStore } from "react";
+
+const QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribe(cb: () => void) {
+  const mq = window.matchMedia(QUERY);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+}
+
+/**
+ * True when the visitor prefers reduced motion. On the server (and the first client
+ * render) it returns true, so static HTML always shows the still, fully readable state.
+ */
+export function usePrefersReducedMotion() {
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(QUERY).matches,
+    () => true,
+  );
+}

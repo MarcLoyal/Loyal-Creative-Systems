@@ -50,6 +50,14 @@ proxy.ts                    Market detection → internal rewrite to /ph or /us
 
 `logo.png` (root) is the master file. `python3 scripts/brand-assets.py` (needs Pillow and NumPy) regenerates `public/brand/*`, `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` and `app/opengraph-image.png` from it.
 
+## Content
+
+Marketing copy lives in `config/content/` as typed data. A string can be the same in both markets or `{ ph, us }`. Pages are templates over that data.
+
+## Fonts
+
+`app/fonts/` holds subset variable fonts. Regenerate with `pip install fonttools brotli && python3 scripts/subset-fonts.py`.
+
 ## How market routing works
 
 Public URLs never contain the market. `proxy.ts` picks `ph` or `us` (switcher cookie first, then the edge country header; Philippines → PH, everything else → US) and rewrites internally to `app/(marketing)/[market]/…`. Each market's pages are prerendered, so pages stay static and fast. `/ph/...` and `/us/...` links set the cookie and redirect to the clean URL.

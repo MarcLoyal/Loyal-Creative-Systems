@@ -4,7 +4,8 @@ import { SITE } from "@/config/site";
 import "./globals.css";
 
 /*
- * Self-hosted fonts (SPEC 2.3). Variable files cover weights 400–700.
+ * Self-hosted fonts (SPEC 2.3), subset by scripts/subset-fonts.py to the characters and
+ * weights the site uses: Inter 400–600 (body), Montserrat 600–700 (headings).
  * display "optional": preloaded fonts are used when they arrive within the first ~100 ms;
  * otherwise the metric-matched fallback stays, so a late font never re-renders the hero
  * and pushes Largest Contentful Paint past the 2.5 s target (SPEC 24).
@@ -12,7 +13,7 @@ import "./globals.css";
 const inter = localFont({
   src: "./fonts/inter-latin-wght.woff2",
   variable: "--font-inter",
-  weight: "400 700",
+  weight: "400 600",
   display: "optional",
 });
 

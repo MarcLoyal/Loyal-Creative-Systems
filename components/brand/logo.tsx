@@ -14,12 +14,14 @@ export function Logo({
   variant = "color",
   size = "md",
   className,
-  priority = false,
+  loading = "lazy",
 }: {
   variant?: "color" | "white";
   size?: "md" | "lg";
   className?: string;
-  priority?: boolean;
+  /** "eager" in the header. Deliberately not preloaded: the logo is never the largest
+   *  element, and a high-priority preload would compete with the fonts for bandwidth. */
+  loading?: "eager" | "lazy";
 }) {
   const { src, white, width, height } = BRAND.logo;
   return (
@@ -32,7 +34,7 @@ export function Logo({
         alt={SITE.name}
         width={width}
         height={height}
-        priority={priority}
+        loading={loading}
         sizes={size === "md" ? "170px" : "220px"}
         className={cn("w-auto", size === "md" ? "h-11 sm:h-12" : "h-16")}
       />
