@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens (SPEC section 2.2).
+ * Values are the spec's approximations. TODO(brand): re-sample from logo.png once supplied.
+ *
+ * Contrast notes (WCAG AA, checked with scripts/contrast.mjs):
+ *  - blue-500 is 3.65:1 on white: use for focus rings, icons, borders and large display text only.
+ *    Links and small accent text use blue-700 (7.17:1).
+ *  - slate-500 is 4.43:1 on surface-alt: secondary *text* uses `muted` (slate-600) instead.
+ *  - success / warning base colours fail as text on white: use the *-700 text variants.
+ */
+@theme {
+  --color-navy-900: #0b1f5c;
+  --color-navy-950: #071640;
+  --color-blue-300: #7db8ff;
+  --color-blue-500: #0a84ff;
+  --color-blue-700: #0b4fc4;
+  --color-ink: #0f172a;
+  --color-slate-300: #cbd5e1;
+  --color-slate-500: #64748b;
+  --color-muted: #475569;
+  --color-line: #dbe3ee;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f4f7fb;
+  --color-success: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-50: #ecfdf3;
+  --color-warning: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-50: #fffbeb;
+  --color-danger: #dc2626;
+  --color-danger-700: #b91c1c;
+  --color-danger-50: #fef2f2;
+  --color-info-50: #eef5ff;
+
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 0.75rem;
+  /* Size of the angled "S" cut used on cards, buttons and dividers. */
+  --cut: 14px;
+  --cut-sm: 8px;
+
+  --animate-pulse-travel: pulse-travel 3s linear infinite;
+  --animate-tick: tick 400ms ease-out both;
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  @keyframes pulse-travel {
+    0% { offset-distance: 0%; opacity: 0; }
+    8% { opacity: 1; }
+    92% { opacity: 1; }
+    100% { offset-distance: 100%; opacity: 0; }
+  }
+  @keyframes tick {
+    0% { transform: scale(0.6); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-surface);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--color-navy-900);
+    font-weight: 700;
+    line-height: 1.2;
+    text-wrap: balance;
+  }
+  h3, h4 { font-weight: 600; }
+  /* Links inside text are underlined so they never rely on colour alone (WCAG 1.4.1). */
+  a { color: var(--color-blue-700); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible {
+    outline: 3px solid var(--color-blue-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Small section label: reuses the logo tagline style (uppercase, wide tracking). */
+  .eyebrow {
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-blue-700);
+  }
+  /* The angled cut from the "S": top-right and bottom-left corners clipped. */
+  .cut-corners {
+    clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, var(--cut) 100%, 0 calc(100% - var(--cut)));
+  }
+  .cut-corner-tr {
+    clip-path: polygon(0 0, calc(100% - var(--cut-sm)) 0, 100% var(--cut-sm), 100% 100%, 0 100%);
+  }
+  /* Angled section divider. */
+  .divider-angle {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 3rem), 0 100%);
+  }
+  .brand-gradient {
+    background-image: linear-gradient(120deg, var(--color-navy-900) 0%, var(--color-blue-700) 55%, var(--color-blue-500) 100%);
+  }
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -4rem;
+    z-index: 100;
+    background: var(--color-navy-900);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+  }
+  .skip-link:focus { top: 1rem; }
+}
