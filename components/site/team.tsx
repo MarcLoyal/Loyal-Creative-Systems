@@ -15,7 +15,7 @@ export function TeamGrid() {
             sizes="(min-width: 1024px) 400px, (min-width: 640px) 50vw, 100vw"
             className="aspect-[4/5] w-full object-cover"
           />
-          <div className="p-6">
+          <div className="p-6 text-center">
             <h3 className="text-lg">{m.name}</h3>
             {m.role && <p className="mt-1 font-heading text-sm font-semibold text-blue-700">{m.role}</p>}
             {m.focus && <p className="mt-3 text-muted">{m.focus}</p>}
