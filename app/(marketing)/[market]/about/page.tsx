@@ -4,6 +4,7 @@ import { marketParam } from "@/lib/page";
 import { breadcrumbJsonLd, organizationJsonLd, pageMetadata } from "@/lib/seo";
 import { CheckIcon } from "@/components/ui/icons";
 import { CtaBand, JsonLd, PageHero, Section } from "@/components/site/blocks";
+import { TeamGrid } from "@/components/site/team";
 
 export const metadata: Metadata = pageMetadata({
   title: "About",
@@ -63,9 +64,17 @@ export default async function AboutPage({ params }: PageProps<"/[market]/about">
         </ul>
       </Section>
 
-      {/* [DECISION] D7: team names and photos. Default: company name only. */}
+      {/* [DECISION] D7: photos supplied; names and roles in config/content/team.ts are placeholders. */}
+      <Section
+        id="team"
+        eyebrow="Our team"
+        title="The people who build your system"
+        intro={<p>You work with the same small team from the first call to handover.</p>}
+      >
+        <TeamGrid />
+      </Section>
 
-      <Section id="areas" eyebrow="Where we work" title="Serving the Philippines and the United States">
+      <Section id="areas" tone="alt" eyebrow="Where we work" title="Serving the Philippines and the United States">
         <div className="grid gap-6 md:grid-cols-2">
           <div className="rounded-card border border-line p-6">
             <h3 className="text-lg">Philippines</h3>

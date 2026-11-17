@@ -3,6 +3,7 @@ import { SITE } from "@/config/site";
 import { marketParam } from "@/lib/page";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { Container, JsonLd, PageHero } from "@/components/site/blocks";
+import { TeamStrip } from "@/components/site/team";
 
 export const metadata: Metadata = pageMetadata({
   title: "Get your system plan",
@@ -67,6 +68,9 @@ export default async function ContactPage({ params }: PageProps<"/[market]/conta
               </li>
             ))}
           </ol>
+          <div className="mt-10 border-t border-line pt-8">
+            <TeamStrip />
+          </div>
         </section>
       </Container>
     </>
